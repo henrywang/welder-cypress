@@ -1,5 +1,6 @@
 describe('Logging In - HTML Web Form', () => {
-  it('logging in to welder application', () =>{
+  // Create a new blueprint
+  beforeEach(() => {
     cy.iframe('[name="cockpit1:localhost/welder"]', 'body').as('iframe');
     cy.get('@iframe')
       .find('[data-target="#cmpsr-modal-crt-blueprint"]')
@@ -48,7 +49,24 @@ describe('Logging In - HTML Web Form', () => {
     cy.get('@iframe')
       .find('a[href="#/blueprints"]')
       .click();
-    
+  });
+  // Delete created blueprint
+  afterEach(() => {
+    cy.visit('#/blueprints');
+    cy.iframe('[name="cockpit1:localhost/welder"]', 'body').as('iframe');
+    cy.get('@iframe')
+      .find('[data-blueprint="automation"] [id="dropdownKebabRight9"]')
+      .click();
+    cy.get('@iframe')
+      .find('[data-blueprint="automation"] ul li:nth-child(2) a')
+      .click();
+    cy.get('@iframe')
+      .find('[class="btn btn-danger"]')
+      .click();
+
+  });
+
+  it('logging in to welder application', () =>{
     cy.get('@iframe')
       .find('[data-blueprint="automation"]')
       .find('.list-group-item-text')

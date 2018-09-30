@@ -13,10 +13,15 @@ Cypress.Commands.add('iframe', (selector, element) => {
     });
 });
 
-beforeEach(() => {
+before(() => {
   cy.visit('/');
 
   cy.get('[id="login-user-input"]').type('root');
   cy.get('[id="login-password-input"]').type('foobar');
   cy.get('[id="login-button"]').click();
+});
+
+after(() => {
+  cy.get('[id="content-user-name"]').click();
+  cy.get('[id="go-logout"]').click();
 });
